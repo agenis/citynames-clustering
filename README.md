@@ -54,7 +54,7 @@ If you want to play with some cities similarities and see what it returns on a m
 
 ## 5. Let's get serious
 
-Let's bring in some serious clustering algorithms, now; the usecase is not a "classic" clustering case, since we want to define our own measure of "distance" which is not trivial like euclidian, and every clustering need a way to compute a distance between couples of points. We will also have a scaling problem, since 36,000 rows means 1.3 billions of comparisons filled into a large triangular matrix. We will start with a random sample of size 15% of the whole dataset. Among the possible clustering techniques, we tested PAM (grouping cities around "parangons") and DBSCAN (grouping cities by agregating close cities one by one). DBSCAN (density based clustering) automatically computed the number of clusters, given a minimum cluster size and point-to-point distance. What it shows, is that the more we restrict clusters to be sufficiently big, the more points go tho the "trash" cluster, meaning they get labelled noise. This could mean that many many cities don't have sufficient proximity with a sufficient number of other cities.
+Let's bring in some serious clustering algorithms, now; the usecase is not a "classic" clustering case, since we want to define our own measure of "distance" which is not trivial like euclidian, and every clustering need a way to compute a distance between couples of points. We will also have a scaling problem, since 36,000 rows means 1.3 billions of comparisons filled into a large triangular matrix. We will start with a random sample of size 15% of the whole dataset. Among the possible clustering techniques, we tested PAM (grouping cities around "parangons") and DBSCAN (grouping cities by agregating close cities iteratively). DBSCAN (density based clustering) automatically computed the number of clusters, given a minimum cluster size and point-to-point distance. What it shows, is that the more we restrict clusters to be sufficiently big, the more points go tho the "trash" cluster, meaning they get labelled noise. This could mean that many many cities don't have sufficient proximity with a sufficient number of other cities.
 
 | Min size of cluster | Nb of clusters obtained | % cities outside any cluster |
 |---------------------|-------------------------|------------------------------|
@@ -68,10 +68,24 @@ Let's bring in some serious clustering algorithms, now; the usecase is not a "cl
 
 The problem with DBSCAN, is that it could group in the same cluster those three cities: "FOS SUR MER", "LA SEINE SUR MER", "NEUILLY SUR SEINE", "NEUILLY PLAISANCE" though the first and the last have nothing in common, except 2 transitionnal forms.
 
-We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we found that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). That way, the PAM outputs a big "messy" cluster (61% of all names), while the others stay very homogeneous. Let's have a look at some output groups:
+We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we found that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). 
 
 Our problem remains to find the optimal number of clusters and its always an open question (see this [SO post](https://stackoverflow.com/q/15376075/3871924))
-We liked to run a silhouette test
+We liked to run a silhouette test (we won't get into the detail of what this indicator means) to determine where to stop, and 18 seemed a reasonable number;That way, the PAM outputs a big "messy" cluster (80% of all names), while the others stay very homogeneous. Let's have a look at the cluster centers (the most representative city of each cluster):
+
+*"CHAPELLE", "CHANNES", "FONTAINE", "FERRIERES", "CHAMPAGNE", "WILLIERS", "AILLEVILLE", "MONTGERMONT", "MORVILLE SEILLE", "MARTINCOURT", "BEAUSSAC", "SAILLANS", "BOUILLY", "GERMAIN", "PIERRE BOIS", "MARIGNY", "REVELLES", "SAVIGNAC"*
+
+And some extract of cities in some clusters:
+
+| parangon   | cluster size | random members                                                                                                    |
+|------------|--------------|-------------------------------------------------------------------------------------------------------------------|
+| FONTAINE   | 58           | MONTAGNEY FONTENET FONTAINE LUCIEN FONTAINES OZILLAC FONTAINE AY MONTAGNY GAILLEFONTAINE TROISFONTAINES FONTELAYE |
+| CHAMPAGNE  | 57           | CHAMPIS PAGNEY CAMPAGNAN CHAMPLIN CHAMPDRAY CHAMPEAUX DOMAGNE OUEN CHAMPAGNE CAMPAN CHAMPAGNAC                    |
+| SAVIGNAC   | 78           | DIGNA PRIGNAC SAVINIEN AVIGNON SERVIGNEY SAVIN SAVIGNE LATHAN SAVIGNY FAYE SERIGNAN JOURGNAC                      |
+| AILLEVILLE | 415          | CARDONVILLE BELLENGREVILLE JOUAVILLE GUNTZVILLER REBEUVILLE BILLEZOIS RANVILLE                                    |
+
 
 ![sil](silhouette.png)
+
+What could have been done is to test the spatial coherence of each cluster
 
