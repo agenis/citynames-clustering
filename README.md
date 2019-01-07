@@ -4,7 +4,7 @@ When you type *whether in paris* in your browser it's quite obvious for everybod
 
 ![search](search_suggestion.png)
 
-This project will try to use these tools to compare the names of the 35921 cities in France, some being as long as "SAINT MARTIN DE BIENFAITE LA CRESSONNIERE", others as short as 1 character (one is named just "Y" https://fr.wikipedia.org/wiki/Y_(Somme) ). Clearly, those two will be hard to compare, right?
+This project will try to use these tools to compare the names of the 35921 cities in France, some being as long as "SAINT MARTIN DE BIENFAITE LA CRESSONNIERE", others as short as 1 character ([one](https://fr.wikipedia.org/wiki/Y_(Somme)) is named just "Y" ). Clearly, those two will be hard to compare, right?
 
 ![Y](y_city.png)
 
@@ -59,13 +59,13 @@ dist002 = function(str1, str2)
 
 ## 4. Check it out on the map
 
-If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](shiny link missing). You can mess with the distance metric as well. So, have you found your next holiday idea?
+If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](https://agenis.shinyapps.io/communes-toponymie-app/). You can mess with the distance metric as well. So, have you found your next holiday idea?
 
 ![map](proximity_map.png)
 
 ## 5. Let's get serious
 
-Let's bring in some serious clustering algorithms, now; the usecase is not a "classic" clustering case, since we want to define our own measure of "distance" which is not trivial like euclidian, and every clustering need a way to compute a distance between couples of points. We will also have a scaling problem, since 36,000 rows means 1.3 billions of comparisons filled into a large triangular matrix. We will start with a random sample of size 15% of the whole dataset. Among the possible clustering techniques, we tested PAM (grouping cities around "parangons") and DBSCAN (grouping cities by agregating close cities iteratively). DBSCAN (density based clustering) automatically computed the number of clusters, given a minimum cluster size and point-to-point distance. What it shows, is that the more we restrict clusters to be sufficiently big, the more points go tho the "trash" cluster, meaning they get labelled noise. This could mean that many many cities don't have sufficient proximity with a sufficient number of other cities.
+Let's bring in some serious clustering algorithms, now; the usecase is not a "classic" clustering case, since we want to define our own measure of "distance" which is not trivial like euclidian, and every clustering need a way to compute a distance between couples of points. We will also have a scaling problem, since 36,000 rows means 1.3 billions of comparisons filled into a large triangular matrix. We will start with a random sample of size 15% of the whole dataset. Among the possible clustering techniques, we tested PAM (grouping cities around "parangons") and DBSCAN (grouping cities by agregating close cities iteratively). DBSCAN (density based clustering) automatically computed the number of clusters, given a minimum cluster size and point-to-point distance. What it shows, is that the more we restrict clusters to be sufficiently big, the more points go tho the "trash" cluster, meaning they get labelled as noise. This could mean that many many cities don't have sufficient proximity with a sufficient number of other cities.
 
 | Min size of cluster | Nb of clusters obtained | % cities outside any cluster |
 |---------------------|-------------------------|------------------------------|
@@ -79,7 +79,7 @@ Let's bring in some serious clustering algorithms, now; the usecase is not a "cl
 
 The problem with DBSCAN, is that it could group in the same cluster those three cities: "FOS SUR MER", "LA SEINE SUR MER", "NEUILLY SUR SEINE", "NEUILLY PLAISANCE" though the first and the last have nothing in common, except 2 transitionnal forms.
 
-We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we found that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). 
+We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we thought that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). 
 
 ![sil](silhouette.png)
 
@@ -97,13 +97,13 @@ And some extract of cities in several clusters:
 | SAVIGNAC   | 78           | DIGNA PRIGNAC SAVINIEN AVIGNON SERVIGNEY SAVIN SAVIGNE LATHAN SAVIGNY FAYE SERIGNAN JOURGNAC                      |
 | AILLEVILLE | 415          | CARDONVILLE BELLENGREVILLE JOUAVILLE GUNTZVILLER REBEUVILLE BILLEZOIS RANVILLE                                    |
 
-Some ofthe clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. What could have tried testing the spatial coherence of each cluster, but we didn't at this time.
+Some of the clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. We could also have tried testing the spatial coherence of each cluster.
 
 So does all this makes sense on a map? Let us plot 7 of the most "location-specific" groups (the others are really spread all over the country, so it's not very informative). The legend shows the color of each group's representative city.  
 
 ![france](france_7groups.png)
 
-Some interessing conclusions: most of the country seems to have a very wide range of city names, altough some regions have strong naming specificities: Normandy, East (Alsace/Lorraine), Aquitaine.. Corsica didn't show up on the clusters, despite very "italian-sounding" names, it might be that the pattern were too diverse
+Some interessing conclusions: most of the country seems to have a very wide range of city names, altough a couple of regions have strong naming specificities: Normandy, East (Alsace/Lorraine), Aquitaine.. Corsica didn't show up on the clusters, despite very "italian-sounding" names, it might be that the pattern were too diverse.
 
 ## 5. Prediction?
 
