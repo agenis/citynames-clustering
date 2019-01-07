@@ -52,9 +52,9 @@ If you want to play with some cities similarities and see what it returns on a m
 
 ![map](proximity_map.png)
 
-## 5. Check it out on the map
+## 5. Let's get serious
 
-
+Let's bring in some serious clustering algorithms, now; the usecase is not a "classic" clustering case, since we want to define our own measure of "distance" which is not trivial like euclidian, and every clustering need a way to compute a distance between couples of points. We will also have a scaling problem, since 36,000 rows means 1.3 billions of comparisons filled into a large triangular matrix. We will start with a random sample of size 10% of the whole dataset.
 
 
 
