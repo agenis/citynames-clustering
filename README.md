@@ -44,7 +44,14 @@ The first method gives proximities with : **"MONTIGNY", "MONTIGNY AIN", "MONTIGN
 
 The second method yields **"MONTIGNY AIN", "MONTIGNY MONTS", "FONTENAY LOING", "MONTIGNY ALLIER"**, but also stuff like **"MONTAGNY VEXIN", "ORBIGNY MONT", "MONTIGNAC COQ"**, accounting for small variations that might sometimes be irrelevant or too destructive, of course.
 
-We could even think of adding some geographical weighting in the similarity, to favour grouping of cities that are not too far away from each other, but we didn't.
+We could even think of adding some geographical weighting in the similarity, to favour grouping of cities that are not too far away from each other, but we didn't. Here is the final distance measure function:
+
+`dist002 = function(str1, str2, w = c(0.5, 0.5))
+{
+  meas1 = stringdist::stringdist(a=str1, b=str2, method="cosine", q=3)
+  meas2 = stringdist::stringdist(a=str1, b=str2, method="lv")/(nchar(str1)+nchar(str2))*2
+  return((meas1+meas2)/2)  
+}`
 
 ## 4. Check it out on the map
 
@@ -70,22 +77,23 @@ The problem with DBSCAN, is that it could group in the same cluster those three 
 
 We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we found that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). 
 
+![sil](silhouette.png)
+
 Our problem remains to find the optimal number of clusters and its always an open question (see this [SO post](https://stackoverflow.com/q/15376075/3871924))
 We liked to run a silhouette test (we won't get into the detail of what this indicator means) to determine where to stop, and 18 seemed a reasonable number;That way, the PAM outputs a big "messy" cluster (80% of all names), while the others stay very homogeneous. Let's have a look at the cluster centers (the most representative city of each cluster):
 
 *"CHAPELLE", "CHANNES", "FONTAINE", "FERRIERES", "CHAMPAGNE", "WILLIERS", "AILLEVILLE", "MONTGERMONT", "MORVILLE SEILLE", "MARTINCOURT", "BEAUSSAC", "SAILLANS", "BOUILLY", "GERMAIN", "PIERRE BOIS", "MARIGNY", "REVELLES", "SAVIGNAC"*
 
-And some extract of cities in some clusters:
+And some extract of cities in several clusters:
 
-| parangon   | cluster size | random members                                                                                                    |
+| clus.center| cluster size | random members                                                                                                    |
 |------------|--------------|-------------------------------------------------------------------------------------------------------------------|
 | FONTAINE   | 58           | MONTAGNEY FONTENET FONTAINE LUCIEN FONTAINES OZILLAC FONTAINE AY MONTAGNY GAILLEFONTAINE TROISFONTAINES FONTELAYE |
 | CHAMPAGNE  | 57           | CHAMPIS PAGNEY CAMPAGNAN CHAMPLIN CHAMPDRAY CHAMPEAUX DOMAGNE OUEN CHAMPAGNE CAMPAN CHAMPAGNAC                    |
 | SAVIGNAC   | 78           | DIGNA PRIGNAC SAVINIEN AVIGNON SERVIGNEY SAVIN SAVIGNE LATHAN SAVIGNY FAYE SERIGNAN JOURGNAC                      |
 | AILLEVILLE | 415          | CARDONVILLE BELLENGREVILLE JOUAVILLE GUNTZVILLER REBEUVILLE BILLEZOIS RANVILLE                                    |
 
-
-![sil](silhouette.png)
+Some ofthe clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. 
 
 What could have been done is to test the spatial coherence of each cluster
 
