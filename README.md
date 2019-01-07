@@ -70,8 +70,8 @@ The problem with DBSCAN, is that it could group in the same cluster those three 
 
 We don't have this effect with PAM clustering where each city is forced-assigned to a cluster and to be somewhat close to a cluster centroid (a *parangon*). But we found that having a "noise cluster" is rather interessing, and we can actually duplicate it with PAM clustering by applying a threshold to our distance matrix: for every couple of points further than 0.6, we set their distance to almost infinite (1E4). That way, the PAM outputs a big "messy" cluster (61% of all names), while the others stay very homogeneous. Let's have a look at some output groups:
 
+Our problem remains to find the optimal number of clusters and its always an open question (see this [SO post](https://stackoverflow.com/q/15376075/3871924))
+We liked to run a silhouette test
 
-
-
-
+![sil](silhouette.png)
 
