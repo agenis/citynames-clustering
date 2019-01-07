@@ -10,11 +10,13 @@ Once we have a metric (ideally between 0 and 1) to compare two random city names
 
 Actually, building knowledge out of city names is a rather classic geographical science (it's called toponymy), and already has a dense litterature, though I couldn't find any use of statistical clustering on this kind of data. Those of you who aren't data scientist might be feel a little bit like John in the following almose-real sci-fi movie (and are therefore allowed to skip some sections) :
 
-"Robert, please tell me you have located the murderer?!"
-"Well John, I got something but it was hard, the firewall was too strong so I had to relocate the satellite on a different orbit and decryp the field with a 128bit algorithm, and I tried to match it to the licence plate number database in a 75km radius but I got nothing, so I used a DNA search on the..."
-"Cut the crap John, tell me what you found for God's sake!"
-"He's right behind you"
+*"Robert, please tell me you have located the murderer?!"*
 
+*"Well John, I got something but I had to relocate the satellite and run a 128bit decryption algorithm, then I checked the modified DNA database but I...*
+
+*"For God's sake Robert, what did you find?"*
+
+All right, you got my point. Let's do some more Robert here. 
 
 
 
