@@ -99,6 +99,10 @@ And some extract of cities in several clusters:
 
 Some ofthe clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. What could have tried testing the spatial coherence of each cluster, but we didn't at this time.
 
-So does all this makes sense on a map? 
+So does all this makes sense on a map? Let us plot 7 of the most "location-specific" groups (the others are really spread all over the country, so it's not very informative). The legend shows the color of each group's representative city.  
 
 ![france](france_7groups.png)
+
+Some interessing conclusions: most of the country seems to have a very wide range of city names, altough some regions have strong naming specificities: Normandy, East (Alsace/Lorraine), Aquitaine.. Corsica didn't show up on the clusters, despite very "italian-sounding" names, it might be that the pattern were too diverse
+
+Anyway, this work was great to discover the capabilities and limits of clustering algorithms, they are not magic! We were also rapidly overwelmed by the computationnal complexity of the problem, and reached the limits of the computer on the whole dataset. I used a handy function called `CompuTimeEstimate` that I developped previously to estimate the computation time of a function before fully running it (it's available [here](https://gitlab.com/agenis/computation-time). The whole project was coded with R and R-Studio.
