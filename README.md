@@ -59,7 +59,7 @@ dist002 = function(str1, str2)
 
 ## 4. Check it out on the map
 
-If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](https://agenis.shinyapps.io/communes-toponymie-app/). You can mess with the distance metric as well. So, have you found your next holiday idea?
+If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](https://agenis.shinyapps.io/communes-toponymie-app/). You can mess with the distance metric as well. Note: please open it with chrome navigator, otherwise the loading will take forever;
 
 ![map](proximity_map.png)
 
