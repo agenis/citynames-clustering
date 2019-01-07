@@ -116,5 +116,6 @@ predict.pam("TRUC MACHINVILLE-SUR-MER")
 # 2       39.4%      Manche
 # 3         11% Haute-Marne
 ```
+Cool, right?
 
 Anyway, this work was great to discover the capabilities and limits of clustering algorithms, they are not magic! We were also rapidly overwelmed by the computationnal complexity of the problem, and reached the limits of the computer on the whole dataset. I used a handy function called `CompuTimeEstimate` that I developped previously to estimate the computation time of a function before fully running it (it's available [here](https://gitlab.com/agenis/computation-time). The whole project was coded with R and R-Studio.
