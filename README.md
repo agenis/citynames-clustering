@@ -2,7 +2,11 @@
 
 When you type *whether in paris* in your browser it's quite obvious for everybody that you are actually asking the the "weather" not "whether". Indeed, the browser will immediately provide some search suggestions matching the word "weather" directly. But How does it knows? How did it decide that your query was wrong in the first place and corrected it? Such techniques involve computations known as "string distance". Indeed, two strings can be compared based on the number of common characters, the number of matching sub-sequences of N consecutives characters, or the number of edit operations needed to switch from one to the other. Dozens of related or combined metrics, more or less complicated, exist.
 
+![search](search_suggestion.png)
+
 This project will try to use these tools to compare the names of the 35921 cities in France, some being as long as "SAINT MARTIN DE BIENFAITE LA CRESSONNIERE", others as short as 1 character (one is named just "Y" https://fr.wikipedia.org/wiki/Y_(Somme) ). Clearly, those two will be hard to compare, right?
+
+![Y](y_city.png)
 
 Once we have a metric (ideally between 0 and 1) to compare two random city names, we can do two fun things:
 - plot all cities with a high matching score to any given city, on a map
