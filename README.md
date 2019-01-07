@@ -105,4 +105,16 @@ So does all this makes sense on a map? Let us plot 7 of the most "location-speci
 
 Some interessing conclusions: most of the country seems to have a very wide range of city names, altough some regions have strong naming specificities: Normandy, East (Alsace/Lorraine), Aquitaine.. Corsica didn't show up on the clusters, despite very "italian-sounding" names, it might be that the pattern were too diverse
 
+## 5. Prediction?
+
+It could be fun to try to predict the location of a random city based on previous similarities, or even a totally fictitious city. The least stupid idea I came out with at 2.00am to achieve this is to test a new string against his 10 most related cities in the whole database, then sample their belonging departements with weights (the weights being the inverse of the distance metric), and return the department with highest probability. Let's try it (and for R experts, this function is a 25-lines dplyr piping):
+
+```
+predict.pam("TRUC MACHINVILLE SUR MER")
+####  probability      dpmt_long
+####1        43.2         Manche
+####2        39.7       Calvados
+####3         9.2 Seine-Maritime
+```
+
 Anyway, this work was great to discover the capabilities and limits of clustering algorithms, they are not magic! We were also rapidly overwelmed by the computationnal complexity of the problem, and reached the limits of the computer on the whole dataset. I used a handy function called `CompuTimeEstimate` that I developped previously to estimate the computation time of a function before fully running it (it's available [here](https://gitlab.com/agenis/computation-time). The whole project was coded with R and R-Studio.
