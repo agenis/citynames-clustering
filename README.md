@@ -22,7 +22,7 @@ All right, you got my point. Let's do some more Robert here.
 
 ## 1. How do we get the cities database?
 
-All cities and villages with GPS locations in France are available at the [data gouv platform](https://www.data.gouv.fr/fr/datasets/listes-des-communes-geolocalisees-par-regions-departements-circonscriptions-nd/); however for having repeatedly treated such data in electoral analysis, I was well aware of its poor quality and how it was a real pain to clean those rows for special characters, duplicates, missing GPS locations etc. In the discussion forum someone already had a cleaned dataset merged with data from LA POSTE (see the post [here](https://www.datavis.fr/index.php?page=validate-your-data)), with all names in upper case, no special character, 100% geolocated, just what I needed. We also imported a simplified geoshapeData file to get an emtpy map of France and its departments from [here](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/).
+All cities and villages with GPS locations in France are available at the [data gouv platform](https://www.data.gouv.fr/fr/datasets/listes-des-communes-geolocalisees-par-regions-departements-circonscriptions-nd/); however for having repeatedly treated such data in electoral analysis, I was well aware of its poor quality and how it was a real pain to clean those rows for special characters, duplicates, missing GPS locations etc. In the discussion forum someone already had a cleaned dataset merged with data from LA POSTE (see the post [here](https://www.datavis.fr/index.php?page=validate-your-data)), with all names in upper case, no special character, 100% geolocated, just what I needed. We also imported a simplified geoshapeData file to get an emtpy map of France and its departments from [here](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/). We excluded DOMTOM from the analysis.
 
 ## 2. Pretreat the data
 
@@ -116,6 +116,6 @@ predict.pam("TRUC MACHINVILLE-SUR-MER")
 # 2       39.4%      Manche
 # 3         11% Haute-Marne
 ```
-Cool, right?
+Cool, right? Well, this prediction's guess is correct about only 20% of the time, so don't go crazy...
 
 Anyway, this work was great to discover the capabilities and limits of clustering algorithms, they are not magic! We were also rapidly overwelmed by the computationnal complexity of the problem, and reached the limits of the computer on the whole dataset. I used a handy function called `CompuTimeEstimate` that I developped previously to estimate the computation time of a function before fully running it (it's available [here](https://gitlab.com/agenis/computation-time). The whole project was coded with R and R-Studio.
