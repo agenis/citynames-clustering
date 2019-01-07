@@ -24,7 +24,7 @@ All right, you got my point. Let's do some more Robert here.
 
 All cities and villages with GPS locations in France are available at the [data gouv platform](https://www.data.gouv.fr/fr/datasets/listes-des-communes-geolocalisees-par-regions-departements-circonscriptions-nd/); however for having repeatedly treated such data in electoral analysis, I was well aware of its poor quality and how it was a real pain to clean those rows for special characters, duplicates, missing GPS locations etc. In the discussion forum someone already had a cleaned dataset merged with data from LA POSTE (see the post [here](https://www.datavis.fr/index.php?page=validate-your-data)), with all names in upper case, no special character, 100% geolocated, just what I needed. We also imported a simplified geoshapeData file to get an emtpy map of France and its departments from [here](https://www.data.gouv.fr/fr/datasets/contours-des-departements-francais-issus-d-openstreetmap/).
 
-## 2. How do we pretreat the data?
+## 2. Pretreat the data
 
 For our specific use the data even has to be a bit transformed. The city names have a lot of stuff that seemed useless to compute proximities with, i'm talking about stuff like prepositions LE, EN, SUR, DE, etc. Indeed, AIRE-SUR-L'ADOUR and AIRE-SUR-LA-LYS are 1,000km away, have nothing in common except those *stop words* constructs and would wrongly appear in the same cluster if we didn't remove them. By doing so, we change their semantic proximity from 0.57 to 0.72. Same goes from all the religious names having SAINT/SAINTE(S) in them; but I had first to check if the geographical repartition of those religious names was spatially uniform, and it seemed to be the case. To achieve all these operations, I used chunks of code like this one:
 
@@ -46,11 +46,19 @@ The second method yields **"MONTIGNY AIN", "MONTIGNY MONTS", "FONTENAY LOING", "
 
 We could even think of adding some geographical weighting in the similarity, to favour grouping of cities that are not too far away from each other, but we didn't.
 
-## 4. Check it out on the map!
+## 4. Check it out on the map
 
-If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](shiny link missing)
+If you want to play with some cities similarities and see what it returns on a map of France, you can check out my [**little application HERE**](shiny link missing). You can mess with the distance metric as well. So, have you found your next holiday idea?
 
 ![map](proximity_map.png)
+
+## 5. Check it out on the map
+
+
+
+
+
+
 
 
 
