@@ -84,7 +84,7 @@ We don't have this effect with PAM clustering where each city is forced-assigned
 ![sil](silhouette.png)
 
 Our problem remains to find the optimal number of clusters and its always an open question (see this [SO post](https://stackoverflow.com/q/15376075/3871924))
-We liked to run a silhouette test (we won't get into the detail of what this indicator means) to determine where to stop, and 18 seemed a reasonable number;That way, the PAM outputs a big "messy" cluster (80% of all names), while the others stay very homogeneous. Let's have a look at the cluster centers (the most representative city of each cluster):
+We liked to run a silhouette test (we won't get into the detail of what this indicator means) to determine where to stop, and 18 seemed a reasonable number; That way, the PAM outputs a big "messy" cluster (80% of all names), while the others stay very homogeneous. Let's have a look at the cluster centers (the most representative city of each cluster):
 
 *"CHAPELLE", "CHANNES", "FONTAINE", "FERRIERES", "CHAMPAGNE", "WILLIERS", "AILLEVILLE", "MONTGERMONT", "MORVILLE SEILLE", "MARTINCOURT", "BEAUSSAC", "SAILLANS", "BOUILLY", "GERMAIN", "PIERRE BOIS", "MARIGNY", "REVELLES", "SAVIGNAC"*
 
@@ -97,7 +97,8 @@ And some extract of cities in several clusters:
 | SAVIGNAC   | 78           | DIGNA PRIGNAC SAVINIEN AVIGNON SERVIGNEY SAVIN SAVIGNE LATHAN SAVIGNY FAYE SERIGNAN JOURGNAC                      |
 | AILLEVILLE | 415          | CARDONVILLE BELLENGREVILLE JOUAVILLE GUNTZVILLER REBEUVILLE BILLEZOIS RANVILLE                                    |
 
-Some ofthe clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. 
+Some ofthe clusters are quite interesting, for instance all the variations around the word "FONTAINE" (which means *fountain*), but others don't make much sense, like grouping every city with "VILLE" (meaning *city*) in it. What could have tried testing the spatial coherence of each cluster, but we didn't at this time.
 
-What could have been done is to test the spatial coherence of each cluster
+So does all this makes sense on a map? 
 
+![france](france_7groups.png)
