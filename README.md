@@ -28,7 +28,9 @@ All cities and villages with GPS locations in France are available at the [data 
 
 For our specific use the data even has to be a bit transformed. The city names have a lot of stuff that seemed useless to compute proximities with, i'm talking about stuff like prepositions LE, EN, SUR, DE, etc. Indeed, AIRE-SUR-L'ADOUR and AIRE-SUR-LA-LYS are 1,000km away, have nothing in common except those *stop words* constructs and would wrongly appear in the same cluster if we didn't remove them. By doing so, we change their semantic proximity from 0.57 to 0.72. Same goes from all the religious names having SAINT/SAINTE(S) in them; but I had first to check if the geographical repartition of those religious names was spatially uniform, and it seemed to be the case. To achieve all these operations, I used chunks of code like this one:
 
-`gsub(" D[EU]?S? | L[EA]?S? | SAINTE? | SUR | AUX? | EN | ET | SOUS ", " ", com$nom)`
+```
+gsub(" D[EU]?S? | L[EA]?S? | SAINTE? | SUR | AUX? | EN | ET | SOUS ", " ", com$nom)
+```
 
 We decided to keep the spaces and not collapse the components of the city names, because spaces are relevant. Some things I decided to keep, such as "notre dame", "lez", "pres", "es", because I thought they might bring some relevant historical perspective. So, remember that very long city name? Now it's become "MARTIN BIENFAITE CRESSONNIERE"!
 
@@ -44,14 +46,16 @@ The first method gives proximities with : **"MONTIGNY", "MONTIGNY AIN", "MONTIGN
 
 The second method yields **"MONTIGNY AIN", "MONTIGNY MONTS", "FONTENAY LOING", "MONTIGNY ALLIER"**, but also stuff like **"MONTAGNY VEXIN", "ORBIGNY MONT", "MONTIGNAC COQ"**, accounting for small variations that might sometimes be irrelevant or too destructive, of course.
 
-We could even think of adding some geographical weighting in the similarity, to favour grouping of cities that are not too far away from each other, but we didn't. Here is the final distance measure function:
+We could even think of adding some geographical weighting in the similarity, to favour grouping of cities that are not too far away from each other, but we didn't. Here is the final distance measure function; it is actually vectorized so that the computation can be done one entire column at the time, that speeds up dramatically the process:
 
-`dist002 = function(str1, str2, w = c(0.5, 0.5))
+```
+dist002 = function(str1, str2)
 {
   meas1 = stringdist::stringdist(a=str1, b=str2, method="cosine", q=3)
-  meas2 = stringdist::stringdist(a=str1, b=str2, method="lv")/(nchar(str1)+nchar(str2))*2
-  return((meas1+meas2)/2)  
-}`
+  meas2 = stringdist::stringdist(a=str1, b=str2, method="lv")/(nchar(str1) + nchar(str2))*2
+  return((meas1 + meas2)/2)  
+}
+```
 
 ## 4. Check it out on the map
 
