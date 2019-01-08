@@ -1,6 +1,6 @@
 # citynames-clustering
 
-When you type *whether in paris* in your browser it's quite obvious for everybody that you are actually asking for the "weather" not "whether". Indeed, the browser will immediately provide some search suggestions matching the word "weather" directly. But How does it knows? How did it decide that your query was wrong in the first place and corrected it? Such techniques involve computations known as "string distance". Indeed, two strings can be compared based on the number of common characters, the number of matching sub-sequences of N consecutives characters, or the number of edit operations needed to switch from one to the other. Dozens of related or combined metrics, more or less complicated, exist.
+When you type *whether in paris* in your browser it's quite obvious for everybody that you are actually asking for the "weather" not "whether". Indeed, the browser will immediately provide some search suggestions matching the word "weather" directly. But How does it knows? How did it decide that your query was wrong in the first place and corrected it? Such techniques involve computations known as "string distance". Indeed, two strings can be compared based on the number of common characters, the number of matching sub-sequences, or various related metrics, more or less complex.
 
 ![search](search_suggestion.png)
 
